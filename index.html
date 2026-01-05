@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>TargetBall | ikktr Games</title>
+    <title>TargetBall DEMO | ikktr Games</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
     <style>
@@ -18,22 +18,23 @@
         padding: 0;
         overflow: hidden;
         font-family: Arial, sans-serif;
+        background: #000;
       }
       
       #unity-container {
         position: fixed;
-        top: 0;
-        left: 0;
         width: 100%;
         height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: all 0.3s ease;
       }
       
       #unity-canvas {
-        width: 100% !important;
-        height: 100% !important;
-        position: absolute;
-        top: 0;
-        left: 0;
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
       }
       
       #unity-footer {
@@ -70,16 +71,17 @@
       
       #game-info {
         position: fixed;
-        top: 10px;
+        top: 0;
         left: 0;
         width: 100%;
         text-align: center;
         color: white;
         font-size: 12px;
         z-index: 100;
-        background: rgba(0, 0, 0, 0.5);
-        padding: 5px;
+        background: rgba(0, 0, 0, 0.7);
+        padding: 10px;
         font-family: Arial, sans-serif;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
       }
       
       #game-info a {
@@ -90,6 +92,24 @@
       
       #game-info a:hover {
         text-decoration: underline;
+      }
+      
+      #demo-badge {
+        display: inline-block;
+        background: linear-gradient(45deg, #FF9800, #FF5722);
+        color: white;
+        padding: 3px 8px;
+        border-radius: 4px;
+        font-weight: bold;
+        font-size: 10px;
+        margin-left: 5px;
+        animation: pulse 2s infinite;
+      }
+      
+      @keyframes pulse {
+        0% { opacity: 0.8; }
+        50% { opacity: 1; }
+        100% { opacity: 0.8; }
       }
       
       #fullscreen-button {
@@ -124,11 +144,60 @@
         display: none;
       }
       
+      #loading-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #000;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        z-index: 9998;
+        font-family: Arial, sans-serif;
+      }
+      
+      .loading-spinner {
+        width: 50px;
+        height: 50px;
+        border: 5px solid rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        border-top-color: #4CAF50;
+        animation: spin 1s linear infinite;
+        margin-bottom: 20px;
+      }
+      
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+      
+      #resolution-info {
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        background: rgba(0, 0, 0, 0.7);
+        color: white;
+        padding: 8px 12px;
+        border-radius: 6px;
+        font-size: 11px;
+        z-index: 99;
+        display: none;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+      
       /* Mobil cihazlar için ekstra stil */
       @media only screen and (max-width: 768px) {
         #game-info {
           font-size: 10px;
-          padding: 3px;
+          padding: 8px;
+        }
+        
+        #demo-badge {
+          font-size: 9px;
+          padding: 2px 6px;
         }
         
         #fullscreen-button {
@@ -138,19 +207,52 @@
           bottom: 15px;
           right: 15px;
         }
+        
+        #resolution-info {
+          left: 10px;
+          bottom: 10px;
+          font-size: 9px;
+          padding: 6px 8px;
+        }
+      }
+      
+      @media only screen and (max-width: 480px) {
+        #game-info {
+          font-size: 9px;
+        }
+        
+        .rotate-icon {
+          font-size: 60px;
+        }
+        
+        #mobile-orientation h2 {
+          font-size: 18px;
+        }
+        
+        #mobile-orientation p {
+          font-size: 14px;
+        }
       }
     </style>
   </head>
   <body>
+    <div id="loading-overlay">
+      <div class="loading-spinner"></div>
+      <p>TargetBall DEMO yükleniyor...</p>
+      <p style="font-size: 12px; margin-top: 10px; color: #4CAF50;">Bu 10 bölümlük bir DEMO sürümüdür</p>
+    </div>
+    
     <div id="mobile-orientation">
       <div class="rotate-icon">↻</div>
       <h2>Lütfen Cihazınızı Yatay Konuma Çevirin</h2>
       <p>Bu oyun en iyi yatay ekranda oynanır</p>
+      <p style="margin-top: 20px; font-size: 14px; color: #4CAF50;">TargetBall DEMO - 10 Bölüm</p>
     </div>
     
     <div id="game-info">
-      Bu oyun <strong>ikktr</strong> tarafından geliştirilmiştir. Tam sürüm için 
-      <a href="https://play.google.com/store/apps/details?id=com.ikktr.TargetBall" target="_blank">Google Play Store'dan</a> indirebilirsiniz.
+      <strong>TargetBall DEMO</strong> <span id="demo-badge">10 BÖLÜM</span> • 
+      Bu oyun <strong>ikktr</strong> tarafından geliştirilmiştir. 
+      Tam sürüm için <a href="https://play.google.com/store/apps/details?id=com.ikktr.TargetBall" target="_blank">Google Play Store'dan</a> indirebilirsiniz.
     </div>
     
     <div id="unity-container" class="unity-desktop">
@@ -165,7 +267,7 @@
       <div id="unity-footer">
         <div id="unity-logo-title-footer"></div>
         <div id="unity-fullscreen-button"></div>
-        <div id="unity-build-title">TargetBall</div>
+        <div id="unity-build-title">TargetBall DEMO</div>
       </div>
     </div>
     
@@ -173,33 +275,121 @@
       <span class="fullscreen-icon">⤢</span>
       <span class="exit-fullscreen-icon">✕</span>
     </div>
+    
+    <div id="resolution-info">
+      Çözünürlük: <span id="res-width">0</span>×<span id="res-height">0</span>
+    </div>
 
     <script>
+      // Global değişkenler
       var canvas = document.querySelector("#unity-canvas");
       var fullscreenButton = document.querySelector("#fullscreen-button");
       var mobileOrientation = document.querySelector("#mobile-orientation");
       var gameInfo = document.querySelector("#game-info");
+      var loadingOverlay = document.querySelector("#loading-overlay");
+      var resolutionInfo = document.querySelector("#resolution-info");
+      var resWidthSpan = document.querySelector("#res-width");
+      var resHeightSpan = document.querySelector("#res-height");
+      
       var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
       var isFullscreen = false;
       var unityInstance = null;
-
+      var gameLoaded = false;
+      var currentOrientation = window.innerWidth > window.innerHeight ? 'landscape' : 'portrait';
+      
+      // Çözünürlük bilgilerini güncelle
+      function updateResolutionInfo() {
+        var width = window.innerWidth;
+        var height = window.innerHeight;
+        resWidthSpan.textContent = width;
+        resHeightSpan.textContent = height;
+        
+        // Hata ayıklama için konsola da yaz
+        console.log('Çözünürlük: ' + width + 'x' + height + ' | Oryantasyon: ' + currentOrientation);
+      }
+      
+      // Ekran boyutunu optimize et
+      function optimizeCanvasSize() {
+        var container = document.querySelector("#unity-container");
+        var windowWidth = window.innerWidth;
+        var windowHeight = window.innerHeight;
+        
+        // Ekran yönünü kontrol et
+        currentOrientation = windowWidth > windowHeight ? 'landscape' : 'portrait';
+        
+        // Unity oyun boyutları (16:9 aspect ratio ideal)
+        var targetAspect = 16 / 9;
+        var currentAspect = windowWidth / windowHeight;
+        
+        if (currentAspect > targetAspect) {
+          // Ekran çok geniş, yüksekliğe göre ayarla
+          canvas.style.width = 'auto';
+          canvas.style.height = '100%';
+        } else {
+          // Ekran çok uzun, genişliğe göre ayarla
+          canvas.style.width = '100%';
+          canvas.style.height = 'auto';
+        }
+        
+        // Canvas'ı ortala
+        container.style.display = 'flex';
+        container.style.justifyContent = 'center';
+        container.style.alignItems = 'center';
+        
+        // Çözünürlük bilgisini güncelle
+        updateResolutionInfo();
+        
+        // Hata ayıklama için konsola yaz
+        console.log('Canvas optimize edildi. Boyut: ' + canvas.offsetWidth + 'x' + canvas.offsetHeight);
+      }
+      
       // Ekran yön kontrolü
       function checkOrientation() {
+        optimizeCanvasSize();
+        
         if (isMobile) {
-          if (window.innerHeight > window.innerWidth) {
+          var isPortrait = window.innerHeight > window.innerWidth;
+          
+          if (isPortrait) {
             // Dikey mod
             mobileOrientation.style.display = 'flex';
             gameInfo.style.display = 'none';
             fullscreenButton.style.display = 'none';
+            resolutionInfo.style.display = 'none';
+            
+            // Oyun yüklendiyse durdur
+            if (gameLoaded && unityInstance) {
+              unityInstance.SetFullscreen(0);
+              unityInstance.SendMessage('GameManager', 'PauseGame');
+            }
           } else {
             // Yatay mod
             mobileOrientation.style.display = 'none';
             gameInfo.style.display = 'block';
             fullscreenButton.style.display = 'flex';
+            resolutionInfo.style.display = 'block';
+            
+            // Oyun yüklendiyse devam ettir
+            if (gameLoaded && unityInstance) {
+              unityInstance.SendMessage('GameManager', 'ResumeGame');
+              
+              // Oyun tam ekranda değilse ve Unity instance varsa tam ekran yap
+              if (!isFullscreen && unityInstance.SetFullscreen) {
+                setTimeout(() => {
+                  unityInstance.SetFullscreen(1);
+                }, 300);
+              }
+            }
           }
+        } else {
+          // Masaüstü için her zaman yatay modda göster
+          mobileOrientation.style.display = 'none';
+          gameInfo.style.display = 'block';
+          fullscreenButton.style.display = 'flex';
+          resolutionInfo.style.display = 'block';
         }
       }
-
+      
       // Tam ekran kontrolü
       function toggleFullscreen() {
         if (!isFullscreen) {
@@ -224,7 +414,7 @@
           updateFullscreenButton();
         }
       }
-
+      
       function updateFullscreenButton() {
         var fullscreenIcon = document.querySelector(".fullscreen-icon");
         var exitIcon = document.querySelector(".exit-fullscreen-icon");
@@ -237,24 +427,38 @@
           exitIcon.style.display = 'none';
         }
       }
-
+      
       // Tam ekran değişikliklerini dinle
       document.addEventListener('fullscreenchange', handleFullscreenChange);
       document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
       document.addEventListener('msfullscreenchange', handleFullscreenChange);
-
+      
       function handleFullscreenChange() {
         isFullscreen = !!(document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement);
         updateFullscreenButton();
+        
+        // Tam ekran değiştiğinde canvas boyutunu güncelle
+        setTimeout(optimizeCanvasSize, 100);
       }
-
-      // Oryantasyon değişikliklerini dinle
-      window.addEventListener('resize', checkOrientation);
-      window.addEventListener('orientationchange', checkOrientation);
-
+      
+      // Oryantasyon ve boyut değişikliklerini dinle
+      window.addEventListener('resize', function() {
+        checkOrientation();
+        optimizeCanvasSize();
+      });
+      
+      window.addEventListener('orientationchange', function() {
+        // Oryantasyon değişikliğinden sonra bir süre bekle
+        setTimeout(function() {
+          checkOrientation();
+          optimizeCanvasSize();
+        }, 300);
+      });
+      
       // Tam ekran butonuna tıklama
       fullscreenButton.addEventListener('click', toggleFullscreen);
-
+      
+      // Hata ve uyarı gösterme fonksiyonu
       function unityShowBanner(msg, type) {
         var warningBanner = document.querySelector("#unity-warning");
         function updateBannerVisibility() {
@@ -273,7 +477,8 @@
         }
         updateBannerVisibility();
       }
-
+      
+      // Unity WebGL build konfigürasyonu
       var buildUrl = "Build";
       var loaderUrl = buildUrl + "/TARGETBALLWEB.loader.js";
       var config = {
@@ -283,53 +488,116 @@
         codeUrl: buildUrl + "/TARGETBALLWEB.wasm.unityweb",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "ikktr",
-        productName: "TargetBall",
-        productVersion: "11",
+        productName: "TargetBall DEMO",
+        productVersion: "1.0",
         showBanner: unityShowBanner,
       };
-
-      // Mobil cihaz kontrolü
-      if (isMobile) {
-        var meta = document.createElement('meta');
-        meta.name = 'viewport';
-        meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
-        document.getElementsByTagName('head')[0].appendChild(meta);
-        document.querySelector("#unity-container").className = "unity-mobile";
-        canvas.className = "unity-mobile";
+      
+      // Oyun yükleme işlemleri
+      function loadGame() {
+        // Mobil cihaz kontrolü
+        if (isMobile) {
+          var meta = document.createElement('meta');
+          meta.name = 'viewport';
+          meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
+          document.getElementsByTagName('head')[0].appendChild(meta);
+          document.querySelector("#unity-container").className = "unity-mobile";
+          canvas.className = "unity-mobile";
+        }
         
-        // Oryantasyon kontrolünü başlat
-        checkOrientation();
-      } else {
-        // Masaüstü için varsayılan boyut
-        canvas.style.width = "100%";
-        canvas.style.height = "100%";
-      }
-
-      canvas.style.background = "url('" + buildUrl + "/TARGETBALLWEB.jpg') center / cover";
-      document.querySelector("#unity-loading-bar").style.display = "block";
-
-      var script = document.createElement("script");
-      script.src = loaderUrl;
-      script.onload = () => {
-        createUnityInstance(canvas, config, (progress) => {
-          document.querySelector("#unity-progress-bar-full").style.width = 100 * progress + "%";
-        }).then((instance) => {
-          unityInstance = instance;
-          document.querySelector("#unity-loading-bar").style.display = "none";
-          
-          // Oyun yüklendikten sonra tam ekranı aç
-          setTimeout(() => {
-            if (!isMobile) {
-              toggleFullscreen();
+        // Canvas arkaplanı
+        canvas.style.background = "url('" + buildUrl + "/TARGETBALLWEB.jpg') center / cover";
+        document.querySelector("#unity-loading-bar").style.display = "block";
+        
+        // Script yükle
+        var script = document.createElement("script");
+        script.src = loaderUrl;
+        script.onload = () => {
+          createUnityInstance(canvas, config, (progress) => {
+            document.querySelector("#unity-progress-bar-full").style.width = 100 * progress + "%";
+            
+            // Yükleme ilerlemesini göster
+            if (progress >= 1) {
+              setTimeout(() => {
+                loadingOverlay.style.opacity = '0';
+                setTimeout(() => {
+                  loadingOverlay.style.display = 'none';
+                }, 500);
+              }, 500);
             }
-          }, 1000);
-          
-        }).catch((message) => {
-          alert("Oyun yüklenirken bir hata oluştu: " + message);
-        });
-      };
-
-      document.body.appendChild(script);
+          }).then((instance) => {
+            unityInstance = instance;
+            gameLoaded = true;
+            document.querySelector("#unity-loading-bar").style.display = "none";
+            
+            // Canvas boyutunu optimize et
+            optimizeCanvasSize();
+            
+            // Oryantasyon kontrolü
+            checkOrientation();
+            
+            // Oyun yüklendikten sonra mobilde tam ekran yap
+            setTimeout(() => {
+              if (isMobile && currentOrientation === 'landscape') {
+                if (unityInstance.SetFullscreen) {
+                  unityInstance.SetFullscreen(1);
+                }
+              }
+            }, 1000);
+            
+            // DEMO sürüm bilgisini Unity'e gönder (isteğe bağlı)
+            try {
+              unityInstance.SendMessage('GameManager', 'SetDemoMode', '10');
+            } catch(e) {
+              console.log('Unity mesaj gönderilemedi, devam ediliyor...');
+            }
+            
+          }).catch((message) => {
+            loadingOverlay.innerHTML = 
+              '<h3 style="color: #ff4444;">Yükleme Hatası!</h3>' +
+              '<p>Oyun yüklenirken bir hata oluştu:</p>' +
+              '<p style="color: #ff8888;">' + message + '</p>' +
+              '<button onclick="location.reload()" style="margin-top: 20px; padding: 10px 20px; background: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;">Tekrar Dene</button>';
+          });
+        };
+        
+        script.onerror = () => {
+          loadingOverlay.innerHTML = 
+            '<h3 style="color: #ff4444;">Dosya Bulunamadı!</h3>' +
+            '<p>Oyun dosyaları yüklenemedi. Lütfen:</p>' +
+            '<ol style="text-align: left; margin: 20px;">' +
+            '<li>Build klasörünün doğru konumda olduğundan emin olun</li>' +
+            '<li>Dosya isimlerinin TARGETBALLWEB olduğunu kontrol edin</li>' +
+            '<li>Web sunucusu üzerinden çalıştırdığınızdan emin olun</li>' +
+            '</ol>' +
+            '<button onclick="location.reload()" style="margin-top: 20px; padding: 10px 20px; background: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;">Tekrar Dene</button>';
+        };
+        
+        document.body.appendChild(script);
+      }
+      
+      // Sayfa yüklendiğinde oyunu başlat
+      window.addEventListener('DOMContentLoaded', function() {
+        // Başlangıçta canvas boyutunu ayarla
+        optimizeCanvasSize();
+        
+        // Çözünürlük bilgisini göster (hata ayıklama için)
+        resolutionInfo.style.display = 'block';
+        updateResolutionInfo();
+        
+        // Oyunu yükle
+        setTimeout(loadGame, 500);
+      });
+      
+      // Sayfadan çıkarken uyarı (isteğe bağlı)
+      window.addEventListener('beforeunload', function(e) {
+        if (gameLoaded) {
+          // İstersen burada bir mesaj gösterebilirsin
+          // e.preventDefault();
+          // e.returnValue = 'Oyundan çıkmak istediğinize emin misiniz?';
+        }
+      });
+      
     </script>
   </body>
 </html>
